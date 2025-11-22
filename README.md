@@ -20,17 +20,17 @@ Comprehensive computer vision-based ADAS prototype implementing lane detection, 
 **Automatic Headlight Dimming System** - Detects oncoming headlights at night using OpenCV contour detection and brightness thresholding.
 
 ### Night Driving - No Oncoming Traffic
-![Headlight NOT Detected](images/Picture1.jpg) [attached_image:3]
+![Headlight NOT Detected](images/Picture1.jpg) 
 
 **Console Output**: `Headlight NOT Detected` - Headlights remain **BRIGHT** for optimal visibility.
 
 ### Oncoming Vehicle Detected
-![Headlight Detected](images/Picture2.jpg) [attached_image:2]
+![Headlight Detected](images/Picture2.jpg) 
 
 **Console Output**: `Headlight Detected` - System automatically **DIMS** headlights to avoid blinding other drivers.
 
 ### Real-World Dashboard Demo
-![In-Car Demo](images/Picture3.jpg) [attached_image:1]
+![In-Car Demo](images/Picture3.jpg) 
 
 **Live Processing**: System running on laptop during actual night driving, processing camera feed in real-time.
 
@@ -46,7 +46,7 @@ Comprehensive computer vision-based ADAS prototype implementing lane detection, 
 
 **Complete hardware + software ADAS system** with automatic headlight control and multi-sensor integration.
 
-![System Architecture](images/Picture4.jpg) [attached_image:1]
+![System Architecture](images/Picture4.jpg) 
 
 ### Hardware Components
 | Module | Purpose | Interface |
