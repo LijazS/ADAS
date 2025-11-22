@@ -9,7 +9,6 @@ Comprehensive computer vision-based ADAS prototype implementing lane detection, 
 ## 🚀 Features
 
 - **Lane Departure Warning (LDW)** - Detects lane markings and alerts on unintended lane drift
-- **Forward Collision Warning (FCW)** - Vehicle detection with distance estimation
 - **Real-time processing** - Optimized for live camera feeds
 - **Visual overlays** - Clear bounding boxes and warning annotations
 - **Configurable thresholds** - Adjustable sensitivity for different conditions
@@ -17,6 +16,8 @@ Comprehensive computer vision-based ADAS prototype implementing lane detection, 
 ---
 
 ## 📱 Demo
+
+<img src="images/Picture1.jpg" width="800" height="450"/>
 
 Add your presentation screenshots here after exporting them:
 
