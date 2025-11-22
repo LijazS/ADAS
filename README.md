@@ -60,30 +60,35 @@ Comprehensive computer vision-based ADAS prototype implementing lane detection, 
 
 ### Processing Pipeline
 
+1. Capture frame from camera.
+2. Apply ROI masking and brightness thresholding.
+3. Find contours corresponding to oncoming headlights.
+4. Decide whether to dim or brighten the headlights.
+5. Trigger relay and update on‑screen status.
+
 ---
 
 ## 🛠️ Tech Stack
 
-| Component | Technology |
-|-----------|------------|
-| Core CV | OpenCV 4.x |
-| Processing | NumPy, SciPy |
-| Detection | Custom Hough + Object Detection |
-| Visualization | Matplotlib |
-| Language | Python 3.8+ |
+| Component   | Technology            |
+|------------|-----------------------|
+| Computer   | Raspberry Pi          |
+| Vision     | OpenCV (Python)       |
+| Logic      | Python 3              |
+| Control    | GPIO + Relay Module   |
 
 ---
 
 ## 🚀 Quick Start
 
 ### Prerequisites
-Python 3.8+
-OpenCV
-NumPy
 
-text
+- Raspberry Pi with Python 3  
+- OpenCV and NumPy installed  
+- Camera connected and working  
 
 ### Installation
+
 git clone https://github.com/LijazS/ADAS.git
 cd ADAS
 pip install -r requirements.txt
@@ -91,149 +96,97 @@ pip install -r requirements.txt
 text
 
 ### Usage
-Process video file
-python src/main.py --input data/sample_video.mp4 --output results/annotated.mp4
 
-Live camera demo
-python src/main.py --camera 0 --live
-
-Test with default sample
-python src/main.py --demo
+Live camera demo with automatic dim/bright
+python src/main.py --camera 0
 
 text
+
+(Adjust the command if your entry file or arguments differ.)
 
 ---
 
 ## 📁 Project Structure
 
 ADAS/
-├── data/ # Sample videos and test images
 ├── src/ # Source code
-│ ├── main.py # Main entry point
-│ ├── lane_detector.py
-│ ├── vehicle_detector.py
-│ ├── utils.py
-│ └── config.py
-├── models/ # Trained models (if any)
-├── outputs/ # Processed video results
+│ ├── main.py # Entry point
+│ ├── detection.py # Headlight detection logic
+│ ├── relay.py # GPIO / relay control
+│ └── utils.py
 ├── docs/
-│ └── images/ # README screenshots
-├── Presentation.pdf # 🎯 Project slides
+│ └── images/ # Architecture + demo screenshots
+├── data/ # Sample images / videos (optional)
+├── Presentation.pdf # Project slides
 ├── requirements.txt
 └── README.md
 
 text
 
+(Adapt filenames to your actual code.)
+
 ---
 
 ## ⚙️ Configuration
 
-Edit `src/config.py` for custom settings:
+Basic configuration is done via constants in the code, for example:
 
-LANE_DETECTION = {
-'min_lane_area': 500,
-'max_lane_gap': 100,
-'rho': 1,
-'theta': np.pi/180,
-'threshold': 50,
-'minLineLength': 50,
-'maxLineGap': 200
-}
-
-COLLISION_WARNING = {
-'min_distance_threshold': 30, # meters
-'warning_distance': 50 # meters
-}
+BRIGHTNESS_THRESHOLD = 240 # pixel intensity for headlight detection
+MIN_CONTOUR_AREA = 50 # filter out noise
+DIMMING_DELAY_SEC = 0.5 # debounce before toggling relay
 
 text
+
+Describe or link to where these live (e.g. `config.py` or top of `main.py`).
 
 ---
 
 ## 🎯 Results
 
-**Performance Metrics** (from presentation):
-| Feature | Accuracy | FPS (real-time) | Precision | Recall |
-|---------|----------|-----------------|-----------|--------|
-| Lane Detection | 92% | 25 FPS | 89% | 94% |
-| Vehicle Detection | 87% | 18 FPS | 85% | 90% |
+- Detects oncoming vehicle headlights in real time from the front camera.
+- Automatically toggles between **BRIGHT** and **DIM** using a relay to control the headlamps.
+- Verified at night on real roads using a Raspberry Pi mounted inside the car.
 
-**Key Results**:
-- Successfully detects lane departures within 0.5 seconds
-- Vehicle collision warnings trigger at configurable safe distances
-- Works on standard dashcam footage (720p-1080p)
+Include the results image:
 
-![Results](docs/images/results_summary.png)
+text
 
 ---
 
 ## 🔍 How It Works
 
-### 1. Lane Detection Pipeline
-Frame → Grayscale → Gaussian Blur → Canny Edges → ROI → Hough Lines → Average Lines → Overlay
+1. **Headlight Detection**  
+   - Convert frame to grayscale, apply ROI mask.  
+   - Use brightness thresholding to isolate very bright pixels.  
+   - Find contours and select candidates in the expected headlight region.
 
-text
-
-### 2. Vehicle Detection
-Frame → Resize → Object Detector → Non-Max Suppression → Distance Estimation → Warning
-
-text
-
-### 3. Alert System
-- **Yellow warning**: Approaching threshold
-- **Red alert**: Immediate danger detected
-- **Audio cues**: Optional beep warnings
+2. **Decision & Control**  
+   - If a valid contour is detected, switch headlights to **DIM**.  
+   - If no oncoming headlight is present, keep or return to **BRIGHT**.  
+   - Status is shown on the processed frame window and used to drive the relay.
 
 ---
 
-## ⚠️ Limitations
+## ⚠️ Limitations & Future Work
 
-- Daytime performance optimized (night vision limited)
-- Clear lane markings required
-- Single camera perspective
-- No 3D distance measurement
+- Optimized for night driving; not designed for daytime or heavy glare.  
+- Assumes a fixed camera position and single forward‑facing view.  
 
-## 🔮 Future Work
+Possible improvements:
 
-- Deep learning models (YOLOv8, LaneNet)
-- Nighttime adaptation
-- Multi-camera support
-- Hardware deployment (Raspberry Pi)
-
----
-
-## 📊 Export Images from Presentation
-
-1. Open `Presentation.pdf` in any PDF viewer
-2. Export key slides as PNG: system diagram, results, demo screenshots
-3. Save to `docs/images/`
-4. Update image paths in this README
+- Better robustness to rain/fog using additional sensors.  
+- Tuning thresholds for different cameras and vehicles.  
+- Logging and remote monitoring via GSM/Wi‑Fi and GPS.
 
 ---
 
 ## 👥 Author
 
-**Lijaz S**  
-[LinkedIn](https://linkedin.com/in/lijazs) | [Portfolio](https://lijazs.github.io)
+**Lijaz S**
 
 ---
 
 ## 📄 License
 
-MIT License - Free for educational and research use.
-See LICENSE file for details.
-
-text
-
----
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to branch (`git push origin feature/AmazingFeature`)
-5. Open Pull Request
-
----
-
+MIT License – see `LICENSE` for details.
 *⭐ Star this repo if you found it useful!*
