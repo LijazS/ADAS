@@ -41,6 +41,7 @@ The system captures video frames, converts them to grayscale, and applies a trap
 <p align="center">
 <img src="images/1.png" alt="Headlight Detection Output" width="600">
 </p>
+
 **Challenges & Solutions:**  
 - **Problem:** Street lights and shop lights caused false detections.  
   **Solution:** Implemented a Region of Interest (ROI) mask and brightness thresholds. If the ambient area is generally too bright, high beams are kept off.
@@ -59,6 +60,7 @@ The system continuously saves frames. A custom GUI allows the user to select a s
 <img src="images/2.png" alt="Dashcam User Interface" width="400">
 <img src="images/2.1.png" alt="Dashcam User Interface" width="400">
 </p>
+
 **Challenges & Solutions:**  
 - **Problem:** Simultaneous video detection and converting frames to MP4 formats like .mp4 was too resource-intensive for the Pi.  
   **Solution:** Frames are saved as individual images instead of a video file. Multi-threading is used to handle saving in the background without freezing the detection loop.
@@ -83,6 +85,7 @@ If an accident is detected, the system extracts footage starting from 3 minutes 
 <p align="center">
 <img src="images/3.png" alt="Accident Detection Logic" width="500">
 </p>
+
 ---
 
 ### 4. Traffic Light & Speed Monitoring
@@ -93,6 +96,7 @@ The system loads a database of traffic light coordinates (traffic_lights.txt). I
 <p align="center">
 <img src="images/4.png" alt="Traffic Light Detection Terminal" width="600">
 </p>
+
 ---
 
 ## Circuit Diagrams
@@ -104,11 +108,13 @@ The Raspberry Pi acts as the central hub connecting the Camera, Accelerometer, G
 <img src="images/5.png" alt="Internal Circuit Diagram" width="600">
 <img src="images/5.1.png" alt="Internal Circuit Diagram" width="600">
 </p>
+
 ### External Wiring
 Shows the connection between the 12V Car Battery, the Buck Converter, the Relay, and the Headlights.
  <p align="center"> 
 <img src="images/6.png" alt="External Wiring Diagram" width="600">
 </p>
+
 ---
 
 ## Future Scope
